@@ -56,8 +56,6 @@ define(
                         //如需修改支付语言，可传入语言代码
                         onePageCardData.init(this.pay_mode,this.css_url,this.payment_language,this.public_key,domainName);
                     });
-                    //如需修改支付语言，可传入语言代码
-                    // onePageCardData.init('https://secure.oceanpayment.com/gateway/direct/pay',"","en","ba57a56ce38af606291eff3ac69f3d4e99a7c4f43ef136c6af9f076519dffc156f883647d5f0fac5acf6b02ed257849b8b7d5d780430ec16efe87a4239326bea0b7ba100e6f58e48376cf424a4f9e6ffa6d83f354f614071e7d6c862549b2ce2dbf6d96d805b27cbc8c504c094b197a10226ccaef77662097199b3b46da91179","https://goshop.xiaoanqi.top");
                 });
             },
             
