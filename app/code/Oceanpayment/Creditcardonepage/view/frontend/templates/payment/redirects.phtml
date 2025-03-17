@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+
+<script>
+        alert(111);
+    jQuery(function() {
+        //如需修改支付语言，可传入语言代码
+        onePageCardData.init("","","en","ba551273f8907f6d1b2842cf424ee990fda0e87202ce1e26d999d03bc6b90fba38a501111d32cbef2c876ef1c22b6620523de9d83e6e910880c43f9f4b060599d6e8135d7db69059b702fd04d53e695df72f9fdfb5e5043bc72a3b7e03cbb306630c80f1e56c33e7ac07b51e25f216db2feb0ba0f3808cd66689bc09a3de724b","https://goshop.xiaoanqi.top/");
+
+        $("#op-payment-icons img").css("display", "inline-block");
+    });
+    var oceanpaymentCallBack = function(data){
+                    $("#card_data").val(data.card_data);
+                    $("#errorMsg").val(data.errorMsg);
+
+                }
+</script>
