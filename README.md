@@ -40,13 +40,28 @@ Magento is a professional open source e-commerce system. Magento is designed to 
     <td>Provide by Oceanpayment technical support.</td>
   </tr>
   <tr>
-    <td>Gataway URL</td>
-    <td>Production environment：https://secure.oceanpayment.com/gateway/service/pay<br>
-      Sandbox environment：https://test-secure.oceanpayment.com/gateway/service/pay</td>
+    <td>Public Key</td>
+    <td>Provide by Oceanpayment technical support.</td>
   </tr>
   <tr>
     <td>Pay Mode</td>
-    <td>Redirect:Redirect to open payment page<br>Iframe:iframe payment page.</td>
+    <td>Provide by Oceanpayment technical support.</td>
+  </tr>
+  <tr>
+    <td>SSL</td>
+    <td>Provide by Oceanpayment technical support.</td>
+  </tr>
+  <tr>
+    <td>CSS URL</td>
+    <td>Provide by Oceanpayment technical support.</td>
+  </tr>
+  <tr>
+    <td>Payment icon</td>
+    <td>Provide by Oceanpayment technical support.</td>
+  </tr>
+  <tr>
+    <td>Payment Language</td>
+    <td>Provide by Oceanpayment technical support.</td>
   </tr>
   <tr>
     <td>New Order Status</td>
