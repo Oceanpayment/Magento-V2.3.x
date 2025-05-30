@@ -32,14 +32,16 @@ define(
             getpaymenticon:function(){
                 
                 var paymentConfig = window.checkoutConfig.payment.creditcardonepage;
-                var paymenticon_arr = paymentConfig.payment_icon.split(",");
-                var img = '';
-                paymenticon_arr.forEach(function(element) {
-                    var imageUrl = require.toUrl('Oceanpayment_Creditcardonepage/images/'+element+'.png');
-                    img = img+"<img src=\""+imageUrl+"\" width=\"60\">";
-                });
-                var div = document.getElementById("paymenticon");
-                div.innerHTML = img;
+                if(paymentConfig.payment_icon != null){
+                    var paymenticon_arr = paymentConfig.payment_icon.split(",");
+                    var img = '';
+                    paymenticon_arr.forEach(function(element) {
+                        var imageUrl = require.toUrl('Oceanpayment_Creditcardonepage/images/'+element+'.png');
+                        img = img+"<img src=\""+imageUrl+"\" width=\"60\">";
+                    });
+                    var div = document.getElementById("paymenticon");
+                    div.innerHTML = img;
+                }
             },
             
             opinput:function(){
