@@ -36,7 +36,7 @@ define(
                     var paymenticon_arr = paymentConfig.payment_icon.split(",");
                     var img = '';
                     paymenticon_arr.forEach(function(element) {
-                        var imageUrl = require.toUrl('Oceanpayment_Creditcardonepage/images/'+element+'.png');
+                        var imageUrl = require.toUrl('Oceanpayment_Creditcardonepage/images/'+element+'.svg');
                         img = img+"<img src=\""+imageUrl+"\" width=\"60\">";
                     });
                     var div = document.getElementById("paymenticon");
