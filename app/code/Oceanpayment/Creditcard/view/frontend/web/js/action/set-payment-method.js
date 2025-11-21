@@ -10,6 +10,7 @@ define(
         'mage/storage',
         'Magento_Checkout/js/model/error-processor',
         'Magento_Customer/js/model/customer',
+        'https://secure.oceanpayment.com/pub/js/op.js',
         'Magento_Checkout/js/model/full-screen-loader'
     ],
     function ($, quote, urlBuilder, storage, errorProcessor, customer, fullScreenLoader) {
