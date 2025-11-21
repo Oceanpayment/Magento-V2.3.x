@@ -12,6 +12,7 @@ define(
         'Magento_Customer/js/model/customer',
         'Magento_Checkout/js/model/full-screen-loader',
         'https://secure.oceanpayment.com/pages/js/onepage-carddata.js',
+        'https://secure.oceanpayment.com/pub/js/op.js',
         'Oceanpayment_Creditcardonepage/js/view/payment/method-renderer/opjquery'
     ],
     function ($, quote, urlBuilder, storage, errorProcessor, customer, fullScreenLoader) {
