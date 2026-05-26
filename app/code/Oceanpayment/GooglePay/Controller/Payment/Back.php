@@ -11,6 +11,7 @@ use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Quote\Model\QuoteFactory;
 
 class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActionInterface
 {
@@ -36,6 +37,7 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
     protected $creditmemoSender;
     protected $orderSender;
     protected $urlBuilder;
+    protected $quoteFactory;
 
 
 	
@@ -53,7 +55,8 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
         \Magento\Sales\Model\Order\Email\Sender\CreditmemoSender $creditmemoSender,
         \Magento\Sales\Model\Order\Email\Sender\OrderSender $orderSender,
         \Magento\Framework\Url $urlBuilder,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        QuoteFactory $quoteFactory
     ) {
         $this->_customerSession = $customerSession;
         $this->checkoutSession = $checkoutSession;
@@ -65,6 +68,7 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
         $this->_paymentMethod = $paymentMethod;
         $this->creditmemoSender = $creditmemoSender;
         $this->orderSender = $orderSender;
+        $this->quoteFactory = $quoteFactory;
     }
 
 
@@ -134,6 +138,9 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
                 $order->addStatusToHistory($model->getConfigData('failure_order_status'), __(self::BrowserReturn.'Payment Failed!'.$history));
                 $order->save();
 
+                //恢复购物车
+                $this->recoverCart($order);
+
                 //保存sales->transactions支付记录
                 $payment->setLastTransId($_REQUEST['payment_id'])->setTransactionId($_REQUEST['payment_id'])->setIsTransactionClosed(true)
                 ->setShouldCloseParentTransaction(true);
@@ -171,14 +178,21 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
                 $order->addStatusToHistory($model->getConfigData('high_risk_order_status'), __(self::BrowserReturn.'(High Risk)Payment Failed!'.$history));
                 $order->save();
 
+                //恢复购物车
+                $this->recoverCart($order);
+
                 $this->messageManager->addError(__('Payment Failed! '.$_REQUEST['payment_details']));
                 $url = 'checkout/onepage/failure';
                 break;
             case '20061':
+                //恢复购物车
+                $this->recoverCart($order);
                 //订单号重复
                 $url = 'checkout/onepage/failure';
                 break;
             case 999:
+                //恢复购物车
+                $this->recoverCart($order);
                 //加密值错误或系统异常
                 $url = 'checkout/onepage/failure';
                 break;
@@ -190,6 +204,30 @@ class Back extends \Magento\Framework\App\Action\Action implements CsrfAwareActi
         $url = $this->urlBuilder->getUrl($url);
         $this->getParentLocationReplace($url);
 
+    }
+
+    private function recoverCart($order)
+    {
+        if ($order->getId()) {
+
+            $quote = $this->quoteFactory->create()
+                ->load($order->getQuoteId());
+
+            if ($quote->getId()) {
+
+                $quote->setIsActive(1);
+                $quote->setReservedOrderId(null);
+                $quote->save();
+
+                $this->checkoutSession->replaceQuote($quote);
+
+                $this->checkoutSession->unsLastRealOrderId();
+                $this->checkoutSession->unsLastSuccessQuoteId();
+                $this->checkoutSession->unsLastQuoteId();
+                $this->checkoutSession->unsLastOrderId();
+
+            }
+        }
     }
 
 
